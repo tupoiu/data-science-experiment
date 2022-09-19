@@ -1,6 +1,5 @@
 import random
 
-
 class Warren:
     size: int
     pos: int  # \leq size
@@ -19,7 +18,9 @@ class Warren:
         self.guesses += 1
         if attempt == self.pos:
             self.step()
-            return self.guesses
+            g = self.guesses
+            self.guesses = 0
+            return g
         else:
             self.step()
             return False
@@ -36,5 +37,12 @@ class Warren:
 
 
 def rabbit_search(warren: Warren):
-    # = FILL IN = #
+    for i in range(warren.get_size()):  # Check each burrow once => warren.get_size() checks
+        g = warren.guess(i)
+        if g:
+            return g
+    for i in range(1 if warren.get_size() % 2 == 0 else 0, warren.get_size()):
+        g = warren.guess(i)
+        if g:
+            return g
     return False

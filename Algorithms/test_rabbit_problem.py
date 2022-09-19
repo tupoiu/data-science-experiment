@@ -9,8 +9,6 @@ class TestWarren(TestCase):
         warren = Warren(2)
         g1 = warren.guess(0)
         g2 = warren.guess(0)
-        print("g1 = ", g1)
-        print("g2 = ", g2)
         self.assertEqual(True, bool(g1) ^ bool(g2))
 
 
