@@ -1,5 +1,6 @@
 import random
 
+
 class Warren:
     size: int
     pos: int  # \leq size

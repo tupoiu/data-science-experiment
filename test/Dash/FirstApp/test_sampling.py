@@ -3,8 +3,6 @@ from unittest import TestCase
 import pandas as pd
 
 import Sampling
-from Algorithms import rabbit_problem
-from Algorithms.rabbit_problem import Warren
 
 
 def one():

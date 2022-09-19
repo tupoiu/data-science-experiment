@@ -3,10 +3,9 @@
 
 from dash import Dash, html, dcc
 import plotly.express as px
-import pandas as pd
-import Sampling
-from Algorithms import rabbit_problem
-from Algorithms.rabbit_problem import Warren
+import sampling
+from src.Algorithms import rabbit_problem
+from src.Algorithms.rabbit_problem import Warren
 
 app = Dash(__name__)
 

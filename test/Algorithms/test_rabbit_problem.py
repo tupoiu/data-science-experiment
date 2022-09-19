@@ -1,7 +1,6 @@
 from unittest import TestCase
-
-from Algorithms import rabbit_problem
-from Algorithms.rabbit_problem import Warren
+from src.Algorithms import rabbit_problem
+from src.Algorithms.rabbit_problem import Warren
 
 
 class TestWarren(TestCase):
