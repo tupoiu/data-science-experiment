@@ -3,9 +3,9 @@
 
 from dash import Dash, html, dcc
 import plotly.express as px
-import sampling
 from src.Algorithms import rabbit_problem
 from src.Algorithms.rabbit_problem import Warren
+from src.Dash.FirstApp import sampling
 
 app = Dash(__name__)
 
@@ -19,15 +19,15 @@ app = Dash(__name__)
 # })
 
 warren = Warren(100)
-df = Sampling.create_sample_to_dataframe(method=rabbit_problem.rabbit_search, args=[warren], trials=100000)
+df = sampling.create_sample_to_dataframe(method=rabbit_problem.rabbit_search, args=[warren], trials=10000)
 
 # fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 fig = px.histogram(data_frame=df, x="Result")
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+    html.H1(children='Number of guesses required to solve the rabbit problem'),
 
     html.Div(children='''
-        Dash: A web application framework for your data.
+        Histogram showing distribution of number of guesses
     '''),
 
     dcc.Graph(
