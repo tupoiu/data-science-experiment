@@ -54,4 +54,3 @@ class Test(TestCase):
         expected_boxes.reverse()
         self.assertEqual(expected_boxes, russian_doll_sort(boxes, descending=True))
         self.assertEqual(False, russian_doll_sort(bad_boxes, descending=True))
-        
