@@ -2,6 +2,8 @@ import math
 import numpy as np
 import random as rd
 
+exponent_s = 2  # The exponent for the force
+
 
 def mag(x):
     return np.sqrt(x.dot(x))
@@ -32,7 +34,7 @@ def force(target: np.array, repulsive_point: np.array) -> np.array:  # Force on 
     if dist == 0:
         return target - repulsive_point
     else:
-        return (target - repulsive_point)/math.pow(dist, 2)
+        return (target - repulsive_point)/math.pow(dist, exponent_s)
 
 
 def thomson_force_step(points: list[np.array], learning_rate=0.001):
@@ -46,3 +48,21 @@ def thomson_force_step(points: list[np.array], learning_rate=0.001):
     for i in range(n):
         points[i] += learning_rate*forces[i]
         points[i] = normalise(points[i])
+
+
+def pairwise_energy(point0: np.array, point1: np.array):
+    dist = mag(point0 - point1)
+    if dist == 0:
+        return 0
+    else:
+        return 1 / math.pow(dist, exponent_s-1)
+
+
+def thomson_energy(points: list[np.array]):
+    E = 0
+    n = len(points)
+    for i in range(n):
+        for j in range(i, n):
+            E += pairwise_energy(points[i], points[j])
+
+    return E

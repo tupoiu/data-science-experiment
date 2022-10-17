@@ -21,28 +21,31 @@ app = Dash(__name__)
 
 warren = Warren(100)
 df = sampling.create_sample_to_dataframe(method=rabbit_problem.rabbit_search, args=[warren], trials=1000)
-points = thomson.random_points_on_sphere(100, 1)
+points = thomson.random_points_on_sphere(120, 1)
 
 for i in range(0):
     print("STEPPED")
     thomson.thomson_force_step(points)
 
 th_df = pd.DataFrame(data=points)
+energy = thomson.thomson_energy(points)
 
-for i in range(20):
-    thomson.thomson_force_step(points)
+# for i in range(20):
+#     thomson.thomson_force_step(points)
+#
+# th_df2 = pd.DataFrame(data=points)
+# energy2 = thomson.thomson_energy(points)
 
-th_df2 = pd.DataFrame(data=points)
-
-for i in range(80):
+for i in range(200):
     thomson.thomson_force_step(points)
 
 th_df3 = pd.DataFrame(data=points)
+energy3 = thomson.thomson_energy(points)
 
 fig = px.histogram(data_frame=df, x="Result")
 
 sphere = px.scatter_3d(data_frame=th_df, x=0, y=1, z=2)
-sphere2 = px.scatter_3d(data_frame=th_df2, x=0, y=1, z=2)
+# sphere2 = px.scatter_3d(data_frame=th_df2, x=0, y=1, z=2)
 sphere3 = px.scatter_3d(data_frame=th_df3, x=0, y=1, z=2)
 
 app.layout = html.Div(children=[
@@ -57,16 +60,20 @@ app.layout = html.Div(children=[
         figure=fig
     ),
 
+    html.H1(children='Thomson Energies and Configurations'),
+    html.Div(children=("Energy = %f" % energy)),
     dcc.Graph(
         id='thomson-plot',
         figure=sphere
     ),
 
-    dcc.Graph(
-        id='thomson-plot2',
-        figure=sphere2
-    ),
+    # html.Div(children=("Energy = %f" % energy2)),
+    # dcc.Graph(
+    #     id='thomson-plot2',
+    #     figure=sphere2
+    # ),
 
+    html.Div(children=("Energy = %f" % energy3)),
     dcc.Graph(
         id='thomson-plot3',
         figure=sphere3
