@@ -1,6 +1,8 @@
 import numpy as np
 
-mag = lambda x: np.sqrt(x.dot(x))
+
+def mag(x):
+    return np.sqrt(x.dot(x))
 
 
 def area_of_triangle(points: list[np.array]):

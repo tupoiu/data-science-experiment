@@ -1,10 +1,11 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
-
+import pandas as pd
 from dash import Dash, html, dcc
 import plotly.express as px
 from src.Algorithms import rabbit_problem
 from src.Algorithms.rabbit_problem import Warren
+import src.Algorithms.thomson_problem as thomson
 from src.Dash.FirstApp import sampling
 
 app = Dash(__name__)
@@ -19,10 +20,31 @@ app = Dash(__name__)
 # })
 
 warren = Warren(100)
-df = sampling.create_sample_to_dataframe(method=rabbit_problem.rabbit_search, args=[warren], trials=10000)
+df = sampling.create_sample_to_dataframe(method=rabbit_problem.rabbit_search, args=[warren], trials=1000)
+points = thomson.random_points_on_sphere(100, 1)
 
-# fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
+for i in range(0):
+    print("STEPPED")
+    thomson.thomson_force_step(points)
+
+th_df = pd.DataFrame(data=points)
+
+for i in range(20):
+    thomson.thomson_force_step(points)
+
+th_df2 = pd.DataFrame(data=points)
+
+for i in range(80):
+    thomson.thomson_force_step(points)
+
+th_df3 = pd.DataFrame(data=points)
+
 fig = px.histogram(data_frame=df, x="Result")
+
+sphere = px.scatter_3d(data_frame=th_df, x=0, y=1, z=2)
+sphere2 = px.scatter_3d(data_frame=th_df2, x=0, y=1, z=2)
+sphere3 = px.scatter_3d(data_frame=th_df3, x=0, y=1, z=2)
+
 app.layout = html.Div(children=[
     html.H1(children='Number of guesses required to solve the rabbit problem'),
 
@@ -31,8 +53,23 @@ app.layout = html.Div(children=[
     '''),
 
     dcc.Graph(
-        id='example-graph',
+        id='rabbit-problem',
         figure=fig
+    ),
+
+    dcc.Graph(
+        id='thomson-plot',
+        figure=sphere
+    ),
+
+    dcc.Graph(
+        id='thomson-plot2',
+        figure=sphere2
+    ),
+
+    dcc.Graph(
+        id='thomson-plot3',
+        figure=sphere3
     )
 ])
 

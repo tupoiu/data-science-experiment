@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import pandas as pd
 
-import Sampling
+import src.Dash.FirstApp.sampling as sampling
 
 
 def one():
@@ -15,14 +15,14 @@ def concat(str1: str, str2: str):
 
 class Test(TestCase):
     def test_create_sample_to_array(self):
-        results = Sampling.create_sample_to_array(method=one, args=[], trials=3)
+        results = sampling.create_sample_to_array(method=one, args=[], trials=3)
         self.assertEqual(results, [1, 1, 1])
 
-        results = Sampling.create_sample_to_array(method=concat, args=["lol", "epic"], trials=2)
+        results = sampling.create_sample_to_array(method=concat, args=["lol", "epic"], trials=2)
         self.assertEqual(results, ["lolepic", "lolepic"])
 
     def test_create_sample_to_dataframe(self):
-        results = Sampling.create_sample_to_dataframe(method=concat, args=["ok", "bro"], trials=4)
+        results = sampling.create_sample_to_dataframe(method=concat, args=["ok", "bro"], trials=4)
         expected_dataframe: pd.DataFrame = pd.DataFrame(columns=["Result"],
                                                         data=["okbro", "okbro", "okbro", "okbro"])
         comparison: pd.DataFrame = expected_dataframe == results
